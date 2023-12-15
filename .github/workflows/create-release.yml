@@ -61,7 +61,7 @@ jobs:
     - name: Print working directory and list files  
       run: |  
         echo "Current working directory: $(pwd)"  
-        ls ./dist  
+        ls .\dist  
 
     - name: Upload Release Asset
       id: upload-release-asset 
@@ -70,6 +70,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.S_GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: .\dist\main.exe
+        asset_path: D:\a\Amigo\Amigo\dist\main.exe
         asset_name: main.exe
         asset_content_type: application/octet-stream
