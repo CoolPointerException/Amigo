@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-on-windows:
+    if: startsWith(github.ref, 'refs/heads/release/')
     runs-on: windows-latest
 
     steps:
@@ -41,7 +42,6 @@ jobs:
       with:
           tag_name: ${{ env.BRANCH_NAME }}
           release_name: ${{ env.BRANCH_NAME }}
-          overwrite: true
           body: ${{ env.BRANCH_NAME }}
           draft: false
           prerelease: false
