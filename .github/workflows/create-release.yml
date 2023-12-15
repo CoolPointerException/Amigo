@@ -34,7 +34,7 @@ jobs:
       run: |  
         git config --local user.email "action@github.com"  
         git config --local user.name "GitHub Action"  
-        git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}  
+        git remote set-url origin https://${{ secrets.S_GITHUB_TOKEN }}@github.com/${{ github.repository }}  
 
     - name: Extract branch name  
       shell: bash  
