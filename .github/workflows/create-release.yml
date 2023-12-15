@@ -6,7 +6,7 @@ on:
       - 'release/*'
 
 jobs:
-  build:
+  build-on-windows:
     runs-on: windows-latest
 
     steps:
@@ -57,11 +57,6 @@ jobs:
         release_name: Release ${{ env.BRANCH_NAME }}
         draft: false
         prerelease: false
-
-    - name: Print working directory and list files  
-      run: |  
-        echo "Current working directory: $(pwd)"  
-        ls .\dist  
 
     - name: Upload Release Asset
       id: upload-release-asset 
