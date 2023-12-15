@@ -54,6 +54,28 @@ generate possible solutions for your task.
 
 If you want to contribute to this project, create a PR or contact me.
 
+## TODOs
+
+There are a few good to have features that needs to be done:
+- integrating with 3rd party project managements tools like: Jira, Asana ...
+- taking advantage of Version Control (git) to create reindexing of a project - only necessary files are reindex
+- update of GUI - make it more user-friendly and prettier
+- creating a Chat-like interface on Task tab: when you get a response you also have an option to create a reply (to provide additional info ...)
+- force LLM to return structured response? For example some sort of JSON structure which would be defined something like:
+``` json
+{
+  "codeSnippets": [
+    "codeSnippet": {
+      "fileName": path + filename,
+      "action": DELETE, ADD, UPDATE,
+      "code": code,
+      "lineNumber": line
+    }
+  ]
+}
+```
+> If we could achieve this, then we could create actions which would automatically modify the files. This would probably require some prompt engineering or fine-tuning of models (currently the have troubles with determine lineNumber)
+
 ## Donations
 
 If you like this project, you can buy me a coffee :)
