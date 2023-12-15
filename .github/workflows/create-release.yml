@@ -35,10 +35,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.S_GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.BRANCH_NAME }}
-        release_name: Release ${{ env.BRANCH_NAME }}
-        draft: false
-        prerelease: false
+          tag_name: ${{ github.event.head_commit.message }}
+          release_name: ${{ github.event.head_commit.message }}
+          overwrite: true
+          body: ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false
 
     - name: Upload Release Asset
       id: upload-release-asset 
