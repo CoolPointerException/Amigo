@@ -1,5 +1,7 @@
 # Amigo AI 🔥- software project assistant
 
+> Create a detailed description of a Software task, and let the AI prepare the solution.
+
 ## Description
 This application is designed to assist with software projects. It creates embeddings of your entire
 project and provides you with useful information and possible solutions for your Tasks. Currently, 
