@@ -24,7 +24,7 @@ jobs:
 
     - name: Build executable
       run: python -m PyInstaller main.spec
-    - uses: actions/upload-artifacts@v2
+    - uses: actions/upload-artifact@v2
       with:
         name: Amigo
         path: dist/main.exe
