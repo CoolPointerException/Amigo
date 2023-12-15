@@ -2,10 +2,7 @@ import os
 
 from llama_index import StorageContext, load_index_from_storage
 import tiktoken
-from llama_index.llms import Gemini
-
 import markdown
-
 from add_project import get_response
 
 
@@ -69,6 +66,6 @@ def question(
 
     response = get_response(gui, prompt)
 
-    return response
+    return markdown.markdown(response)
 
 
