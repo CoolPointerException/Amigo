@@ -1,11 +1,13 @@
 # Amigo AI 🔥- software project assistant
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/coolpointerexception)
+
 > Create a detailed description of a Software task, and let the AI prepare the solution.
 
 ## Description
 This application is designed to assist with software projects. It creates embeddings of your entire
 project and provides you with useful information and possible solutions for your Tasks. Currently, 
-it supports 3 AI Models: OpenAI, Azure OpenAI and Gemini.
+it supports 3 AI Models: `OpenAI`, `Azure OpenAI` and `Gemini`.
 
 ## Architecture
 
