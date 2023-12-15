@@ -25,6 +25,17 @@ jobs:
     - name: Build executable
       run: pyinstaller --onefile main.py
 
+    - name: Checkout code  
+      uses: actions/checkout@v2  
+      with:  
+        persist-credentials: false  # Required to allow the next step  
+      
+    - name: Set git credentials  
+      run: |  
+        git config --local user.email "action@github.com"  
+        git config --local user.name "GitHub Action"  
+        git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}  
+
     - name: Extract branch name  
       shell: bash  
       run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')" >> $GITHUB_ENV  
