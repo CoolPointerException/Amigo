@@ -28,6 +28,10 @@ jobs:
       with:
         name: Amigo
         path: dist/main.exe
+
+    - name: Extract branch name  
+      shell: bash  
+      run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')" >> $GITHUB_ENV  
     
     - name: Create Release
       id: create_release
@@ -35,10 +39,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.S_GITHUB_TOKEN }}
       with:
-          tag_name: ${{ github.event.head_commit.message }}
-          release_name: ${{ github.event.head_commit.message }}
+          tag_name: ${{ env.BRANCH_NAME }}
+          release_name: ${{ env.BRANCH_NAME }}
           overwrite: true
-          body: ${{ github.event.head_commit.message }}
+          body: ${{ env.BRANCH_NAME }}
           draft: false
           prerelease: false
 
