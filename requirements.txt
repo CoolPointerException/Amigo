@@ -6,3 +6,4 @@ tiktoken~=0.5.2
 Markdown~=3.5.1
 tkinterweb~=3.23.5
 google-generativeai~=0.3.0
+sv-ttk~=2.5.5

@@ -6,18 +6,6 @@ import markdown
 from add_project import get_response
 
 
-def list_files(startpath):
-    result = ""
-    for root, dirs, files in os.walk(startpath):
-        level = root.replace(startpath, '').count(os.sep)
-        indent = ' ' * 4 * level
-        result += '{}{}/\n'.format(indent, os.path.basename(root))
-        subindent = ' ' * 4 * (level + 1)
-        for f in files:
-            result += '{}{}\n'.format(subindent, f)
-    return result
-
-
 def question(
     selected_project,
     task,
@@ -45,7 +33,8 @@ def question(
     # ad task description to prompt:
     prompt += "\n\nTask description:\n\n" + task + "\n\n"
     # add file structure to prompt:
-    prompt += "\n\nProject file structure:\n\n" + list_files(project_dir) + "\n\n"
+    f = open(project_dir + "/" + project_name + "/project_files_structure.txt", "r")
+    prompt += "\n\nProject file structure:\n\n" + f.read() + "\n\n"
     num_tokens = len(encoding.encode(prompt))
 
     # iterate over documents that were the best matches

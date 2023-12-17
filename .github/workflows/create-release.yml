@@ -24,7 +24,7 @@ jobs:
         pip install pyinstaller
 
     - name: Build executable
-      run: python -m PyInstaller main.spec
+      run: python -m PyInstaller --onefile main.py
     - uses: actions/upload-artifact@v2
       with:
         name: Amigo

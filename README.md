@@ -6,8 +6,9 @@
 
 ## Description
 This application is designed to assist with software projects. It creates embeddings of your entire
-project and provides you with useful information and possible solutions for your Tasks. Currently, 
-it supports 3 AI Models: `OpenAI`, `Azure OpenAI` and `Gemini`.
+project and provides you with useful information and possible solutions for your Tasks. This reduces the time
+spent on searching for solutions and increases the productivity of your team. 
+Currently, it supports 3 AI Models: `OpenAI`, `Azure OpenAI` and `Gemini`.
 
 ## Architecture
 
@@ -36,19 +37,19 @@ python3 main.py
 and fill in all the required fields. Settings will be saved to `app_settings.json` file when the application exits and 
 will be loaded when you start the application for the second time.
 
-![img.png](assets/img.png)
+<img src="assets/img.png" alt="settings" height="700"/>
 
 2. **PROJECTS:** Go to tab Projects and click on the button `Select Directory`. Fill in the Project name and optionally the select 
 which files should be ignored. Proceed and click on the button `Create Index`. This will create an index of your entire
 project. Once it will finish, you will see text 'Done' under the button, and you will be able to select the project 
 in the list of projects.
 
-![img_1.png](assets/img_1.png)
+<img src="assets/img_1.png" alt="projects" height="700"/>
 
 3. **TASKS:** Go to tab Tasks and enter your task Description. Then click on the button `Run Generation`. This will 
 generate possible solutions for your task.
 
-![img_2.png](assets/img_2.png)
+<img src="assets/img_2.png" alt="tasks" height="700"/>
 
 ## Contributing
 
@@ -75,7 +76,7 @@ There are a few good to have features that needs to be done:
   ]
 }
 ```
-> If we could achieve this, then we could create actions which would automatically modify the files. This would probably require some prompt engineering or fine-tuning of models (currently the have troubles with determine lineNumber)
+> If we could achieve this, then we could create actions which would automatically modify the files. This would probably require some prompt engineering or fine-tuning of models (currently Models have trouble to determine lineNumber)
 
 ## Donations
 

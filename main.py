@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.ttk import Style
+import sv_ttk
 
 from gui.tab_projects import ProjectsTab
 from gui.settings import load_settings, save_settings
@@ -12,11 +13,13 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Amigo")
-        self.geometry("800x600")
+        self.geometry("900x1000")
         self.style = Style()
         self.isLlamaInitialized = False
+        sv_ttk.set_theme("dark")
 
-        self.style.configure('W.TButton', font=('calibri', 15), borderwidth='4')
+        self.style.configure('W.TButton', font=('calibri', 18, 'bold', 'underline'), borderwidth='4')
+        self.style.configure('W.Label', font=('calibri', 13, 'bold'))
 
         # Create the tab control
         self.tab_control = ttk.Notebook(self)

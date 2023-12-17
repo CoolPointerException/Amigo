@@ -53,15 +53,22 @@ def add_project(
         startpath,
         project_name,
         files_to_skip,
+        directories
 ):
     # create a directory with the project name if it does not yet exist
     if not os.path.exists(project_name):
         os.makedirs(project_name)
 
+    directories = list(directories)
+    skip_generated_txt_files = os.path.join(startpath, project_name).replace("\\", "/")
+    directories.append(skip_generated_txt_files)
+
     for subdir, dirs, files in os.walk(startpath):
         for file in files:
             fe_filename = os.path.join(subdir, file)
             fe_filename = fe_filename.replace("\\", "/")
+
+            skip_directory = any(subdir.replace("\\", "/").startswith(s) for s in directories)
 
             # skip if file is an image, or packaged file like zip or anything else
             if file.endswith(".png") or file.endswith(".jpg") or file.endswith(".zip") or file.endswith(".rar") \
@@ -69,7 +76,7 @@ def add_project(
                     or file.endswith(".bz2") or file.endswith(".xz") or file.endswith(".pdf") or file.endswith(".doc") \
                     or file.endswith(".docx") or file.endswith(".ppt") or file.endswith(".pptx") or file.endswith(
                 ".xls") or file.endswith(".xlsx") or file.endswith(".ico") or file.endswith(".gif") or \
-                    file.endswith(".tif") or fe_filename in files_to_skip:
+                    file.endswith(".tif") or fe_filename in files_to_skip or skip_directory:
                 gui.projects_tab.logs_listbox.insert(tk.END, "Skipped file: " + fe_filename)
                 continue
 
@@ -100,6 +107,10 @@ def add_project(
         project_name
     )
 
+    # add project files structure file
+    f = open(project_name + "/project_files_structure.txt", "w")
+    f.write(list_files(startpath, files_to_skip, directories))
+
     # add project to dropdown
     values = list(gui.projects_tab.selected_project["values"])
     gui.projects_tab.selected_project["values"] = values + [f"{project_name} | {startpath}"]
@@ -112,3 +123,19 @@ def get_response(gui, file_contents):
         You are an AI assistant that helps people describe what a certain blocks of code does. 
         Try to describe as best as you can what the following code does. CODE:\n\n{file_contents}"""
     return gui.service_context.llm.complete(prompt).text
+
+
+def list_files(startpath, skip_files, skip_directories):
+    result = ""
+    for root, dirs, files in os.walk(startpath):
+        if any(root.replace("\\", "/").startswith(s) for s in skip_directories):
+            continue
+        level = root.replace(startpath, '').count(os.sep)
+        indent = ' ' * 4 * level
+        result += '{}{}/\n'.format(indent, os.path.basename(root))
+        subindent = ' ' * 4 * (level + 1)
+        for f in files:
+            if root.replace("\\", "/") + "/" + f in skip_files:
+                continue
+            result += '{}{}\n'.format(subindent, f)
+    return result

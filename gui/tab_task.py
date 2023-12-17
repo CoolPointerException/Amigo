@@ -15,18 +15,18 @@ class TaskTab:
         self.root = root
 
         # Task Requirements
-        ttk.Label(frame, text="Task Requirements:").grid(column=0, row=0, sticky='W')
-        self.task_requirements_entry = scrolledtext.ScrolledText(frame, wrap=tk.WORD, width=80, height=5)
+        ttk.Label(frame, text="Task Requirements:", style='W.Label').pack(fill=tk.X, padx=10, pady=(12, 2))
+        self.task_requirements_entry = scrolledtext.ScrolledText(frame, wrap=tk.WORD, height=7)
         self.task_requirements_entry.configure(state='normal')
-        self.task_requirements_entry.grid(column=1, row=0, padx=5, pady=5, rowspan=5)
+        self.task_requirements_entry.pack(fill=tk.X, padx=10, pady=10)
 
         # Run Generation Button
-        self.run_generation_button = ttk.Button(frame, text="Run Generation", command=self.generate_answer)
-        self.run_generation_button.grid(column=1, row=6, padx=5, pady=5)
+        self.run_generation_button = ttk.Button(frame, text="Generate", command=self.generate_answer)
+        self.run_generation_button.pack(padx=10, pady=10)
 
         # Generation Response Field
-        self.generation_response_frame = ttk.Frame(self.frame, width=80, height=25)
-        self.generation_response_frame.grid(column=0, row=7, columnspan=2, padx=5, pady=5)
+        self.generation_response_frame = ttk.Frame(self.frame)
+        self.generation_response_frame.pack(fill=tk.BOTH, padx=10, pady=10, expand=True)
         self.generation_response = HtmlFrame(self.generation_response_frame)
 
     def generate_answer(self):

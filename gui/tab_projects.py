@@ -13,95 +13,122 @@ class ProjectsTab:
         self.root = root
 
         # Select Directory
-        ttk.Label(frame, text="Project Directory:").grid(column=0, row=0, sticky='W')
+        ttk.Label(frame, text="Project Directory:", style='W.Label').pack(fill=tk.X, padx=10, pady=(12, 2))
         self.select_directory_button = ttk.Button(frame, text="Select Directory",
                                                   command=self.select_directory)
-        self.select_directory_button.grid(column=1, row=0, padx=5, pady=5)
+        self.select_directory_button.pack(padx=10, pady=10)
 
         # Project Name
-        ttk.Label(frame, text="Project Name:").grid(column=0, row=1, sticky='W')
-        self.project_name_entry = ttk.Entry(frame, width=90)
-        self.project_name_entry.grid(column=1, row=1, padx=5, pady=5)
+        ttk.Label(frame, text="Project Name:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
+        self.project_name_entry = ttk.Entry(frame)
+        self.project_name_entry.pack(fill=tk.X, padx=10, pady=10)
 
         # Ignore List
-        ttk.Label(frame, text="Files to ignore:").grid(column=0, row=2, sticky='NW')
+        ttk.Label(frame, text="Files to ignore:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
         # Frame for Listbox and scrollbars
         self.ignore_listbox_frame = tk.Frame(frame)
-        self.ignore_listbox_frame.grid(column=1, row=2, padx=5, pady=5, sticky='nsew')
+        self.ignore_listbox_frame.pack(fill=tk.X, padx=10, pady=10)
 
         # Vertical scrollbar
         self.ignore_vscrollbar = tk.Scrollbar(self.ignore_listbox_frame, orient='vertical')
         self.ignore_vscrollbar.pack(side='right', fill='y')
 
-        # Horizontal scrollbar
-        self.ignore_hscrollbar = tk.Scrollbar(self.ignore_listbox_frame, orient='horizontal')
-        self.ignore_hscrollbar.pack(side='bottom', fill='x')
-
         # Ignore Listbox
-        self.ignore_listbox = tk.Listbox(self.ignore_listbox_frame, height=5, width=90,
-                                         yscrollcommand=self.ignore_vscrollbar.set,
-                                         xscrollcommand=self.ignore_hscrollbar.set)
+        self.ignore_listbox = tk.Listbox(self.ignore_listbox_frame, height=5,
+                                         yscrollcommand=self.ignore_vscrollbar.set)
         self.ignore_listbox.pack(side='left', fill='both', expand=True)
 
         # Configure scrollbars
         self.ignore_vscrollbar.config(command=self.ignore_listbox.yview)
-        self.ignore_hscrollbar.config(command=self.ignore_listbox.xview)
 
         # Frame for buttons
         self.buttons_frame = tk.Frame(frame)
-        self.buttons_frame.grid(column=1, row=3, padx=5, pady=5, sticky='w')
+        self.buttons_frame.pack(fill=tk.X, padx=10, pady=10)
 
         # Select Files Button
         self.select_files_button = ttk.Button(self.buttons_frame, text="Select", command=self.select_files)
-        self.select_files_button.grid(column=0, row=0)
-        ttk.Label(self.buttons_frame, text="Select which files should be ignored while indexing").grid(column=0, row=1,
-                                                                                                       sticky='NW')
+        self.select_files_button.pack(side='left', padx=5, pady=5)
+        ttk.Label(self.buttons_frame, text="Select which files should be ignored while indexing")\
+            .pack(side='left', padx=10, pady=2)
 
         # Spacer frame to create gap between buttons
         self.spacer_frame = tk.Frame(self.buttons_frame, width=40)
-        self.spacer_frame.grid(column=1, row=0)
+        self.spacer_frame.pack(side='left', padx=5, pady=5)
 
         # Delete Selected File Button
         self.delete_file_button = ttk.Button(self.buttons_frame, text="Delete", command=self.delete_selected_file)
-        self.delete_file_button.grid(column=2, row=0)
-        ttk.Label(self.buttons_frame, text="Remove selected file from the list").grid(column=2, row=1, sticky='NW')
+        self.delete_file_button.pack(side='left', padx=5, pady=5)
+        ttk.Label(self.buttons_frame, text="Remove selected file from the list").pack(side='left', padx=10, pady=2)
+
+        # Ignore Directory List
+        ttk.Label(frame, text="Directories to ignore:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
+        # Frame for Listbox and scrollbars
+        self.ignore_directory_listbox_frame = tk.Frame(frame)
+        self.ignore_directory_listbox_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        # Vertical scrollbar
+        self.ignore_directory_vscrollbar = tk.Scrollbar(self.ignore_directory_listbox_frame, orient='vertical')
+        self.ignore_directory_vscrollbar.pack(side='right', fill='y')
+
+        # Ignore Listbox
+        self.ignore_directory_listbox = tk.Listbox(self.ignore_directory_listbox_frame, height=5,
+                                         yscrollcommand=self.ignore_directory_vscrollbar.set)
+        self.ignore_directory_listbox.pack(side='left', fill='both', expand=True)
+
+        # Configure scrollbars
+        self.ignore_directory_vscrollbar.config(command=self.ignore_directory_listbox.yview)
+
+        # Frame for buttons
+        self.buttons_directory_frame = tk.Frame(frame)
+        self.buttons_directory_frame.pack(fill=tk.X, padx=10, pady=10)
+
+        # Select Files Button
+        self.select_directories_button = ttk.Button(self.buttons_directory_frame, text="Select",
+                                                    command=self.select_ignored_directory)
+        self.select_directories_button.pack(side='left', padx=5, pady=5)
+        ttk.Label(self.buttons_directory_frame, text="Select which directories should be ignored while indexing") \
+            .pack(side='left', padx=10, pady=2)
+
+        # Spacer frame to create gap between buttons
+        self.spacer_directories_frame = tk.Frame(self.buttons_directory_frame, width=40)
+        self.spacer_directories_frame.pack(side='left', padx=5, pady=5)
+
+        # Delete Selected File Button
+        self.delete_directory_button = ttk.Button(self.buttons_directory_frame, text="Delete",
+                                                  command=self.delete_selected_directory)
+        self.delete_directory_button.pack(side='left', padx=5, pady=5)
+        ttk.Label(self.buttons_directory_frame, text="Remove selected directory from the list").pack(side='left', padx=10, pady=2)
 
         # Add new Project Button
         self.execute_action_button = ttk.Button(frame, text="Create Index",
                                                 command=self.add_new_project, style='W.TButton')
-        self.execute_action_button.grid(column=1, row=4, padx=5, pady=5)
+        self.execute_action_button.pack(padx=10, pady=10)
 
         self.generating_label = ttk.Label(frame, text="")
-        self.generating_label.grid(column=1, row=5, padx=5, pady=5)
+        self.generating_label.pack(padx=10, pady=10)
 
         # Project List Area
-        ttk.Label(frame, text="Selected Project:").grid(column=0, row=6, sticky='NW')
-        self.selected_project = ttk.Combobox(frame, width=88)
-        self.selected_project.grid(column=1, row=6, padx=5, pady=5)
+        ttk.Label(frame, text="Selected Project:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
+        self.selected_project = ttk.Combobox(frame)
+        self.selected_project.pack(fill=tk.X, padx=10, pady=10)
 
         # Logs
-        ttk.Label(frame, text="Logs:").grid(column=0, row=7, sticky='NW')
+        ttk.Label(frame, text="Logs:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
         # Frame for Logs
         self.logs_frame = tk.Frame(frame)
-        self.logs_frame.grid(column=1, row=8, padx=5, pady=5, sticky='nsew')
+        self.logs_frame.pack(fill=tk.X, padx=10, pady=10)
 
         # Vertical scrollbar
         self.logs_vscrollbar = tk.Scrollbar(self.logs_frame, orient='vertical')
         self.logs_vscrollbar.pack(side='right', fill='y')
 
-        # Horizontal scrollbar
-        self.logs_hscrollbar = tk.Scrollbar(self.logs_frame, orient='horizontal')
-        self.logs_hscrollbar.pack(side='bottom', fill='x')
-
         # Logs Listbox
-        self.logs_listbox = tk.Listbox(self.logs_frame, height=5, width=90,
-                                       yscrollcommand=self.logs_vscrollbar.set,
-                                       xscrollcommand=self.logs_hscrollbar.set)
+        self.logs_listbox = tk.Listbox(self.logs_frame, height=8,
+                                       yscrollcommand=self.logs_vscrollbar.set)
         self.logs_listbox.pack(side='left', fill='both', expand=True)
 
         # Configure scrollbars
         self.logs_vscrollbar.config(command=self.logs_listbox.yview)
-        self.logs_hscrollbar.config(command=self.logs_listbox.xview)
 
     def select_directory(self):
         directory = filedialog.askdirectory()
@@ -125,6 +152,19 @@ class ProjectsTab:
         for i in reversed(selected_items):
             self.ignore_listbox.delete(i)
 
+    def select_ignored_directory(self):
+        if hasattr(self, 'selected_directory'):
+            directory = filedialog.askdirectory(initialdir=self.selected_directory, title="Select Directory")
+            if directory:
+                if directory not in self.ignore_directory_listbox.get(0, tk.END):
+                    self.ignore_directory_listbox.insert(tk.END, directory)
+
+    def delete_selected_directory(self):
+        selected_items = self.ignore_directory_listbox.curselection()
+        # Must delete from the end to avoid shifting of the indices
+        for i in reversed(selected_items):
+            self.ignore_directory_listbox.delete(i)
+
     def add_new_project(self):
         if not is_api_type_set(self.root):
             return
@@ -141,18 +181,25 @@ class ProjectsTab:
         project_name = self.project_name_entry.get()
         directory = self.selected_directory
         files = self.ignore_listbox.get(0, tk.END)
+        directories = self.ignore_directory_listbox.get(0, tk.END)
         api_type = self.root.settings_tab.api_type.get()
 
         init_llama_index(self.root, api_type)
 
         self.generating_label.config(text="Generating index, please wait...")
 
-        thread = threading.Thread(target=add_project, args=(
-            self.root,
-            directory,
-            project_name,
-            files,
-        ))
+        try:
+            thread = threading.Thread(target=add_project, args=(
+                self.root,
+                directory,
+                project_name,
+                files,
+                directories,
+            ))
 
-        thread.start()
+            thread.start()
+        except Exception as e:
+            messagebox.showerror("Error", f"Error while generating index!")
+            self.generating_label.config(text="Finished!")
+            self.logs_listbox.insert(tk.END, f"Error: {e}")
 
