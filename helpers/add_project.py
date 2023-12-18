@@ -1,7 +1,7 @@
 import os
 from time import sleep
 from llama_index import SimpleDirectoryReader, VectorStoreIndex
-from llama_index.llms import Gemini, OpenAI, AzureOpenAI
+from llama_index.llms import ChatMessage
 import tkinter as tk
 
 
@@ -85,7 +85,14 @@ def add_project(
             file_contents = f.read()
             f.close()
 
-            text = get_response(gui, file_contents)
+            messages = [
+                ChatMessage(role="system", content="You are an AI assistant that helps people describe what a certain "
+                                                   "blocks of code does."),
+                ChatMessage(role="user", content=f"Try to describe as best as you can what the following code does. "
+                                                 f"CODE:\n\n{file_contents}")
+            ]
+
+            text = get_response(gui, messages).content
 
             # skip if text is None - Error occurred
             if text is None:
@@ -118,11 +125,9 @@ def add_project(
     gui.projects_tab.generating_label.config(text="Done!")
 
 
-def get_response(gui, file_contents):
-    prompt = f"""
-        You are an AI assistant that helps people describe what a certain blocks of code does. 
-        Try to describe as best as you can what the following code does. CODE:\n\n{file_contents}"""
-    return gui.service_context.llm.complete(prompt).text
+def get_response(gui, messages):
+    response = gui.service_context.llm.chat(messages)
+    return response.message
 
 
 def list_files(startpath, skip_files, skip_directories):

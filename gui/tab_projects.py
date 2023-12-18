@@ -2,7 +2,7 @@ import threading
 from tkinter import ttk, filedialog, messagebox
 import tkinter as tk
 
-from add_project import add_project
+from helpers.add_project import add_project
 from gui.input_validator import Properties, validate, is_api_type_set
 from gui.llama_index_init import init_llama_index
 

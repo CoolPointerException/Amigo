@@ -17,6 +17,7 @@ class Application(tk.Tk):
         self.style = Style()
         self.isLlamaInitialized = False
         sv_ttk.set_theme("dark")
+        self.messages = []
 
         self.style.configure('W.TButton', font=('calibri', 18, 'bold', 'underline'), borderwidth='4')
         self.style.configure('W.Label', font=('calibri', 13, 'bold'))
