@@ -19,13 +19,25 @@ Currently, it supports 3 AI Models: `OpenAI`, `Azure OpenAI` and `Gemini`.
 
 ## Setup
 
-### Install dependencies
+### Run executable
+Download executable from the latest release and run it. Keep the file in one place, because it will create additional 
+files and directories needed for indexing and storing settings.
+> The application is not signed, so you will probably get a warning from your OS. If you prefer you can build it on your 
+> own. The following instructions require you to use venv. 
+> 
+> First you need to install requirements: `pip install -r requirements.txt`.
+> Then go to `venv/Lib/site-packages/llama_index/__init.py__` and replace reading from VERSION file (lines 3 and 4)
+> with a simple assigning of the version number. For example: `__version__ = "0.9.16post1"`.
+> Lastly run the command `pyinstaller --onefile main.spec` in the root directory of the project. This will create an executable.
+
+### Run from source
+#### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Run the application
+#### Run the application
 
 ```bash
 python3 main.py
