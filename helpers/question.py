@@ -31,7 +31,7 @@ def question(
         nodes = retriever.retrieve(task)
 
         # add file structure to prompt:
-        f = open(project_dir + "/" + project_name + "/project_files_structure.txt", "r")
+        f = open(project_name + "/project_files_structure.txt", "r")
         system_message = "Project file structure:\n\n" + f.read() + "\n\n"
 
         # count tokens

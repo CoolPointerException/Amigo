@@ -1,4 +1,5 @@
 import os
+import sys
 import tempfile
 import threading
 from tkinter import ttk, scrolledtext, messagebox
@@ -110,8 +111,17 @@ class TaskTab:
         return True
 
     def load_loading_page(self):
+        temp_folder = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
+        if temp_folder == script_dir:
+            # Running as a Python script.
+            loading_animation = os.path.abspath("assets/loading.png").replace('\\', '/')
+        else:
+            # Running as a PyInstaller bundle.
+            loading_animation = os.path.join(temp_folder, 'loading.png').replace('\\', '/')
+
         tempfile.NamedTemporaryFile(mode='r')
-        loading_animation = os.path.abspath("assets/loading.png").replace('\\', '/')
         tempfile.NamedTemporaryFile(mode='w')
         f = open("loading.html", 'w')
         f.write(f"<html><body style='background-color: rgb(28, 28, 28)'><img src='file:///{loading_animation}' style"

@@ -13,23 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'
-    - name: Install requirements
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pyinstaller
-
-    - name: Build executable
-      run: python -m PyInstaller --onefile main.py
-    - uses: actions/upload-artifact@v2
-      with:
-        name: Amigo
-        path: dist/main.exe
-
     - name: Extract branch name  
       shell: bash  
       run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')" >> $GITHUB_ENV  
@@ -45,14 +28,3 @@ jobs:
           body: ${{ env.BRANCH_NAME }}
           draft: false
           prerelease: false
-
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.S_GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: dist/main.exe
-        asset_name: amigo.exe
-        asset_content_type: application/octet-stream
