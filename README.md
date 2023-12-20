@@ -65,7 +65,7 @@ generate possible solutions for your task.
 
 ## Contributing
 
-If you want to contribute to this project, create a PR or contact me.
+If you want to contribute see the [Contribution Guide](CONTRIBUTING.md) for more details (you can also find my contact there).
 Feedback is also greatly appreciated. If you have some good idea for improvement, don't hesitate to contact me. ❤️
 
 ## TODOs
