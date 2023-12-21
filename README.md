@@ -72,9 +72,9 @@ Feedback is also greatly appreciated. If you have some good idea for improvement
 
 There are a few good to have features that needs to be done:
 - integrating with 3rd party project managements tools like: Jira, Asana ...
-- taking advantage of Version Control (git) to create reindexing of a project - only necessary files are reindex
+- [**DONE** ✅] ~~taking advantage of Version Control (git) to create reindexing of a project - only necessary files are reindex~~
 - update of GUI - make it more user-friendly and prettier
-- creating a Chat-like interface on Task tab: when you get a response you also have an option to create a reply (to provide additional info ...)
+- [**DONE** ✅] ~~creating a Chat-like interface on Task tab: when you get a response you also have an option to create a reply (to provide additional info ...)~~
 - force LLM to return structured response? For example some sort of JSON structure which would be defined something like:
 ``` json
 {

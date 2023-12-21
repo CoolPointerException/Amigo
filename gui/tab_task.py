@@ -24,6 +24,11 @@ class TaskTab:
         self.task_requirements_entry.configure(state='normal')
         self.task_requirements_entry.pack(fill=tk.X, padx=10, pady=10)
 
+        # Select project
+        ttk.Label(frame, text="Selected Project:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
+        self.selected_project = ttk.Combobox(frame)
+        self.selected_project.pack(fill=tk.X, padx=10, pady=10)
+
         # Run Generation Button
         self.run_generation_button = ttk.Button(frame, text="Generate", command=self.generate_answer)
         self.run_generation_button.pack(padx=10, pady=10)
@@ -58,14 +63,14 @@ class TaskTab:
 
         api_type = self.root.settings_tab.api_type.get()
         task_requirements = self.task_requirements_entry.get("1.0", tk.END)
-        project_name = self.root.projects_tab.selected_project.get()
+        project_name = self.selected_project.get()
         prompt = self.root.settings_tab.prompt_entry.get("1.0", tk.END)
         max_tokens = self.root.settings_tab.max_tokens.get()
 
         init_llama_index(self.root, api_type)
 
         self.generation_response_frame.place_forget()
-        self.loading_frame.place(y=300, x=0, relwidth=1, height=900)
+        self.loading_frame.place(y=380, x=0, relwidth=1, height=900)
 
         if not self.root.messages:
             self.root.messages.append(

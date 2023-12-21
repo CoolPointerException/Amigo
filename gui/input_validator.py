@@ -21,6 +21,8 @@ class Properties(Enum):
     MAX_TOKENS = 12
     TASK_REQUIREMENTS = 13
     SELECTED_PROJECT = 14
+    THREADS = 15
+    REINDEX_PROJECT = 16
 
 
 def validate(gui, properties):
@@ -97,9 +99,19 @@ def validate(gui, properties):
                     messagebox.showerror("Error", "Please enter a Task requirements.")
                     return False
             case Properties.SELECTED_PROJECT:
-                selected_project = gui.projects_tab.selected_project.get()
+                selected_project = gui.task_tab.selected_project.get()
                 if not selected_project:
                     messagebox.showerror("Error", "Please select a project.")
+                    return False
+            case Properties.THREADS:
+                threads = gui.settings_tab.threads.get()
+                if not threads:
+                    messagebox.showerror("Error", "Please enter number of threads in Settings Tab.")
+                    return False
+            case Properties.REINDEX_PROJECT:
+                reindex_project = gui.projects_tab.reindex_project.get()
+                if not reindex_project:
+                    messagebox.showerror("Error", "Please select a project to reindex.")
                     return False
     return True
 

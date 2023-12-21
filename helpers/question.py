@@ -46,6 +46,12 @@ def question(
         # iterate over documents that were the best matches
         for node in nodes:
             file_name = node.metadata['file_name'][:-4].replace("___", "/")
+
+            # skip files that are not in project directory
+            if file_name == "project_files_structure" or file_name == "git_commit_hash"\
+                    or file_name == "ignored_files" or file_name == "ignored_directories":
+                continue
+
             file_path = project_dir + "/" + file_name
             # open file and read contents
             with open(file_path, 'r') as file:
@@ -74,6 +80,6 @@ def question(
     gui.messages.append(response)
 
     gui.task_tab.loading_frame.place_forget()
-    gui.task_tab.generation_response_frame.place(y=300, x=0, relwidth=1, height=900)
+    gui.task_tab.generation_response_frame.place(y=380, x=0, relwidth=1, height=900)
     gui.task_tab.load_web_page()
     return

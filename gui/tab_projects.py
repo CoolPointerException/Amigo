@@ -2,7 +2,7 @@ import threading
 from tkinter import ttk, filedialog, messagebox
 import tkinter as tk
 
-from helpers.add_project import add_project
+from helpers.add_project import add_project, git_diff
 from gui.input_validator import Properties, validate, is_api_type_set
 from gui.llama_index_init import init_llama_index
 
@@ -108,9 +108,20 @@ class ProjectsTab:
         self.generating_label.pack(padx=10, pady=10)
 
         # Project List Area
-        ttk.Label(frame, text="Selected Project:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
-        self.selected_project = ttk.Combobox(frame)
-        self.selected_project.pack(fill=tk.X, padx=10, pady=10)
+        ttk.Label(frame, text="Reindex Project:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
+        ttk.Label(frame, text="In case there is a .git folder in your root directory, you have an option to reindex "
+                              "only the files that were added or modified since the last indexing.", wraplength=880)\
+            .pack(fill=tk.X, padx=10, pady=2)
+
+        self.reindex_frame = tk.Frame(frame)
+        self.reindex_frame.pack(fill=tk.X)
+
+        self.reindex_project = ttk.Combobox(self.reindex_frame)
+        self.reindex_project.pack(side='left', padx=10, pady=10, fill=tk.X, expand=True)
+
+        # Add new Project Button
+        self.reindex_project_button = ttk.Button(self.reindex_frame, text="Reindex", command=self.reindex_project_action)
+        self.reindex_project_button.pack(side='left', padx=10, pady=10)
 
         # Logs
         ttk.Label(frame, text="Logs:", style='W.Label').pack(fill=tk.X, padx=10, pady=2)
@@ -165,14 +176,41 @@ class ProjectsTab:
         for i in reversed(selected_items):
             self.ignore_directory_listbox.delete(i)
 
-    def add_new_project(self):
-        if not is_api_type_set(self.root):
+    def reindex_project_action(self):
+        is_valid = validate(self.root, [
+            Properties.REINDEX_PROJECT,
+            Properties.THREADS,
+        ])
+
+        if not is_valid:
             return
 
+        reindex_project = self.reindex_project.get()
+
+        # parse project name and project directory
+        reindex_project = reindex_project.split(" | ")
+        project_name = reindex_project[0]
+        project_dir = reindex_project[1]
+
+        f = open(project_name + "/ignored_files.txt", "r")
+        ignored_files = f.read().split("\n")
+
+        f = open(project_name + "/ignored_directories.txt", "r")
+        ignored_directories = f.read().split("\n")
+
+        self.create_index_project(
+            project_name,
+            project_dir,
+            ignored_files,
+            ignored_directories,
+            True
+        )
+
+    def add_new_project(self):
         is_valid = validate(self.root, [
             Properties.PROJECT_NAME,
             Properties.SELECTED_DIRECTORY,
-            Properties.API_TYPE,
+            Properties.THREADS,
         ])
 
         if not is_valid:
@@ -182,9 +220,33 @@ class ProjectsTab:
         directory = self.selected_directory
         files = self.ignore_listbox.get(0, tk.END)
         directories = self.ignore_directory_listbox.get(0, tk.END)
+
+        self.create_index_project(
+            project_name,
+            directory,
+            files,
+            directories,
+        )
+
+    def create_index_project(
+            self,
+            project_name,
+            directory,
+            files,
+            directories,
+            is_reindex=False
+    ):
+        if not is_api_type_set(self.root):
+            return
+
         api_type = self.root.settings_tab.api_type.get()
+        threads = int(self.root.settings_tab.threads.get())
 
         init_llama_index(self.root, api_type)
+
+        diff = None
+        if is_reindex:
+            diff = git_diff(project_name, self.root)
 
         self.generating_label.config(text="Generating index, please wait...")
 
@@ -195,6 +257,9 @@ class ProjectsTab:
                 project_name,
                 files,
                 directories,
+                is_reindex,
+                diff,
+                threads
             ))
 
             thread.start()

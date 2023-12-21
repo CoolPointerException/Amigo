@@ -37,10 +37,12 @@ def load_settings(self):
             if settings.get('projects'):
                 projects = settings.get('projects')
                 for project in projects:
-                    values = list(self.projects_tab.selected_project["values"])
-                    self.projects_tab.selected_project["values"] = values + [project]
+                    values = list(self.task_tab.selected_project["values"])
+                    self.task_tab.selected_project["values"] = values + [project]
+                    self.projects_tab.reindex_project["values"] = values + [project]
             if settings.get('selected_project'):
-                self.projects_tab.selected_project.set(settings.get('selected_project'))
+                self.task_tab.selected_project.set(settings.get('selected_project'))
+                self.projects_tab.reindex_project.set(settings.get('selected_project'))
             if settings.get('max_tokens'):
                 self.settings_tab.max_tokens.delete(0, tk.END)
                 self.settings_tab.max_tokens.insert(INSERT, settings.get('max_tokens'))
@@ -63,8 +65,8 @@ def save_settings(self):
         'embeddings_model': self.settings_tab.embeddings_model_entry.get(),
         'embeddings_deployment': self.settings_tab.embeddings_deployment_entry.get(),
         'prompt': self.settings_tab.prompt_entry.get("1.0", tk.END).strip(),
-        'projects': list(self.projects_tab.selected_project["values"]),
-        'selected_project': self.projects_tab.selected_project.get(),
+        'projects': list(self.task_tab.selected_project["values"]),
+        'selected_project': self.task_tab.selected_project.get(),
         'max_tokens': self.settings_tab.max_tokens.get(),
         'threads': self.settings_tab.threads.get()
     }

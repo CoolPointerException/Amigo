@@ -13,7 +13,7 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Amigo")
-        self.geometry("900x1000")
+        self.geometry("900x1100")
         self.style = Style()
         self.isLlamaInitialized = False
         sv_ttk.set_theme("dark")
