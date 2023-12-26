@@ -75,20 +75,9 @@ There are a few good to have features that needs to be done:
 - [**DONE** ✅] ~~taking advantage of Version Control (git) to create reindexing of a project - only necessary files are reindex~~
 - update of GUI - make it more user-friendly and prettier
 - [**DONE** ✅] ~~creating a Chat-like interface on Task tab: when you get a response you also have an option to create a reply (to provide additional info ...)~~
-- force LLM to return structured response? For example some sort of JSON structure which would be defined something like:
-``` json
-{
-  "codeSnippets": [
-    "codeSnippet": {
-      "fileName": path + filename,
-      "action": DELETE, ADD, UPDATE,
-      "code": code,
-      "lineNumber": line
-    }
-  ]
-}
-```
-> If we could achieve this, then we could create actions which would automatically modify the files. This would probably require some prompt engineering or fine-tuning of models (currently Models have trouble to determine lineNumber)
+- force LLM to return structured response? For example some sort of JSON structure or maybe even something similar as git diff command.
+
+> If we could achieve this, then we could create actions which would automatically modify the files. This would probably require some prompt engineering or fine-tuning of models (currently Models have trouble to determine line numbers)
 
 ## Donations
 

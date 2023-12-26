@@ -99,15 +99,16 @@ def add_project(
     # add git commit hash if available
     add_git_commit_hash(project_name, gui)
 
-    # add ignored files to ignored_files.txt
-    f = open(project_name + "/ignored_files.txt", "w")
-    f.write("\n".join(files_to_skip))
-    f.close()
+    if not is_reindex:
+        # add ignored files to ignored_files.txt
+        f = open(project_name + "/ignored_files.txt", "w")
+        f.write("\n".join(files_to_skip))
+        f.close()
 
-    # add ignored directories to ignored_directories.txt
-    f = open(project_name + "/ignored_directories.txt", "w")
-    f.write("\n".join(directories))
-    f.close()
+        # add ignored directories to ignored_directories.txt
+        f = open(project_name + "/ignored_directories.txt", "w")
+        f.write("\n".join(directories))
+        f.close()
 
     # add project to dropdown
     values = list(gui.task_tab.selected_project["values"])
